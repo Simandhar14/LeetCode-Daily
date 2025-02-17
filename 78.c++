@@ -17,3 +17,37 @@ void solve( vector<vector<int>>&result,vector<int>&nums,int i,vector<int>&temp)
         return result;
     }
 };
+
+//Using vector of constant size 26
+
+class Solution {
+public:
+void solve(unordered_set<string>&st,vector<int>&freq,string &temp,int count)
+{
+    if(count==0){
+        st.insert(temp);
+        return;
+    } 
+    st.insert(temp);
+    for(int i=0;i<26;i++)
+    {
+        if(freq[i]==0) continue;
+        temp.push_back(i+'A');
+        freq[i]--;
+        solve(st,freq,temp,count-1);
+        temp.pop_back();
+        freq[i]++;
+    }
+}
+    int numTilePossibilities(string tiles) {
+        vector<int>freq(26,0);
+        for(char ch:tiles)
+        {
+            freq[ch-'A']++;
+        }
+        unordered_set<string>st;
+        string temp="";
+        solve(st,freq,temp,tiles.length());
+        return st.size()-1;
+    }
+};
