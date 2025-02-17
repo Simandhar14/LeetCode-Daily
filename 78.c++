@@ -18,23 +18,20 @@ void solve( vector<vector<int>>&result,vector<int>&nums,int i,vector<int>&temp)
     }
 };
 
-//Using vector of constant size 26
+//Using vector of constant size 26 
 
 class Solution {
 public:
-void solve(unordered_set<string>&st,vector<int>&freq,string &temp,int count)
+int count=0;
+void solve(vector<int>&freq,string &temp)
 {
-    if(count==0){
-        st.insert(temp);
-        return;
-    } 
-    st.insert(temp);
+    count++;
     for(int i=0;i<26;i++)
     {
         if(freq[i]==0) continue;
         temp.push_back(i+'A');
         freq[i]--;
-        solve(st,freq,temp,count-1);
+        solve(freq,temp);
         temp.pop_back();
         freq[i]++;
     }
@@ -45,9 +42,9 @@ void solve(unordered_set<string>&st,vector<int>&freq,string &temp,int count)
         {
             freq[ch-'A']++;
         }
-        unordered_set<string>st;
+        unordered_set<string>;
         string temp="";
-        solve(st,freq,temp,tiles.length());
-        return st.size()-1;
+        solve(freq,temp);
+        return count-1;
     }
 };
