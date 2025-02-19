@@ -1,9 +1,9 @@
 class Solution {
 public:
-    void solve(int n, int count, set<string>& st, string &temp) {
+    void solve(int n, int count, vector<string>& st, string &temp) {
         if(count==n)
         {
-            st.insert(temp);
+            st.push_back(temp);
             return;
         }
         for (char i = 'a'; i <= 'c'; i++) {
@@ -16,17 +16,10 @@ public:
     }
     string getHappyString(int n, int k) {
         string temp = "";
-        set<string> st;
+        vector<string> st;
         solve(n, 0, st, temp);
         string result = "";
         if(k>st.size()) return result;
-        for (auto it = st.begin(); it != st.end(); it++) {
-            k--;
-            if (k == 0) {
-                result = *it;
-                break;
-            }
-        }
-        return result;
+        return st[k-1];
     }
 };
