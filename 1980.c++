@@ -1,5 +1,21 @@
 class Solution {
 public:
+    string findDifferentBinaryString(vector<string>& nums) {
+        int n=nums.size();
+        unordered_set<string>st(begin(nums),end(nums));
+        for(int i=0;i<=n;i++)
+        {
+            string num=bitset<16>(i).to_string().substr(16-n);
+            if(st.find(num)==st.end()) return num;
+        }
+        return "";
+    }
+};
+
+//Backtracking
+
+class Solution {
+public:
 string result;
 void solve(int n,unordered_set<string>&st,string &temp)
 {
