@@ -17,3 +17,13 @@ public:
         return max(negative,n-i);
     }
 };
+
+//binary search 
+class Solution {
+public:
+    int maximumCount(vector<int>& nums) {
+        auto loweridx=lower_bound(begin(nums),end(nums),0);
+        auto upperidx=upper_bound(begin(nums),end(nums),0);
+        return max(loweridx-nums.begin(),nums.end()-upperidx);
+    }
+};
