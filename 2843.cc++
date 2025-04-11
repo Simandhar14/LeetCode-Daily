@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int countSymmetricIntegers(int low, int high) {
+        int count=0;
+        for(int num=low;num<=high;num++)
+        {
+            string str=to_string(num);
+            if(str.size()%2!=0) continue;
+            int halflen=str.size()/2;
+            int firsthalf=0,lasthalf=0;
+            for(int i=0;i<halflen;i++)
+            {
+                int digit=str[i]-'0';
+                firsthalf+=digit;
+            }
+            for(int i=halflen;i<str.size();i++)
+            {
+                int digit=str[i]-'0';
+                lasthalf+=digit;
+            }
+            if(firsthalf==lasthalf) count++;
+        }
+        return count;
+    }
+};
