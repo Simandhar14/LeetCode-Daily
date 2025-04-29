@@ -19,3 +19,27 @@ public:
         return result;
     }
 };
+
+//2nd way
+
+class Solution {
+public:
+    long long countSubarrays(vector<int>& nums, int k) {
+        long long result = 0;
+        int maxNum = *max_element(nums.begin(), nums.end());
+        vector<int> index;
+        int n = nums.size();
+
+        for (int i = 0; i < n; i++) {
+            if (nums[i] == maxNum) {
+                index.push_back(i);
+            }
+            int len = index.size();
+            if (len >= k) {
+                result += index[len - k] + 1;
+            }
+        }
+
+        return result;
+    }
+};
