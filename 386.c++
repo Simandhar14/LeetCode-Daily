@@ -16,3 +16,21 @@ public:
         
     }
 };
+
+//using recursion
+class Solution {
+public:
+void solve(vector<int>&result,int n,int i){
+    if(i>n) return;
+    result.push_back(i);
+    for(int j=0;j<=9;j++)
+    {
+        solve(result,n,(i*10)+j);
+    }
+}
+    vector<int> lexicalOrder(int n) {
+        vector<int> result;
+        for(int i=1;i<=9;i++)  solve(result,n,i);
+        return result;
+    }
+};
