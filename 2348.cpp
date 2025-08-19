@@ -17,3 +17,24 @@ public:
         return subarray;
     }
 };
+
+//method 2
+class Solution {
+public:
+    long long zeroFilledSubarray(vector<int>& nums) {
+        long long subarray=0;
+        int zero=0;
+        int n=nums.size();
+        for(int j=0;j<n;j++)
+        {
+            if(nums[j]!=0) {
+                zero=0;
+                continue;
+            }else{
+                zero++;
+                subarray+=zero;
+            }
+        }
+        return subarray;
+    }
+};
