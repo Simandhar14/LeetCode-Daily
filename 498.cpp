@@ -55,3 +55,44 @@ public:
         return diagonal;
     }
 };
+
+//recursion
+
+class Solution {
+public:
+void solve(vector<int>&diagonal,int m,int n,int i,int j,int count,bool up,vector<vector<int>>& mat)
+{
+    if(count==0) return;
+    diagonal.emplace_back(mat[i][j]);
+    if(up)
+    {
+        if(j==n-1)
+        {
+            solve(diagonal,m,n,i+1,j,count-1,!up,mat);
+        }else if(i==0){
+            solve(diagonal,m,n,i,j+1,count-1,!up,mat);
+        }else{
+            solve(diagonal,m,n,i-1,j+1,count-1,up,mat);
+        }
+    }else{
+        if(i==m-1)
+        {
+            solve(diagonal,m,n,i,j+1,count-1,!up,mat);
+        }else if(j==0){
+            solve(diagonal,m,n,i+1,j,count-1,!up,mat);
+        }else{
+            solve(diagonal,m,n,i+1,j-1,count-1,up,mat);
+        }
+    }
+}
+    vector<int> findDiagonalOrder(vector<vector<int>>& mat) {
+        bool lefttoright = true;
+        int m = mat.size();
+        int n = mat[0].size();
+        vector<int> diagonal;
+        int row = 0;
+        int col = 0;
+        solve(diagonal,m,n,0,0,m*n,lefttoright,mat);
+        return diagonal;
+    }
+};
