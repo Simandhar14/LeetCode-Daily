@@ -19,3 +19,22 @@ public:
         return solve(triangle, 0, 0);
     }
 };
+
+//better approach with just O(max(row)) space
+
+class Solution {
+public:
+    int minimumTotal(vector<vector<int>>& triangle) {
+        int n=triangle.size();
+        for(int row=n-2;row>=0;row--)
+        {
+            vector<int>temp=triangle[row+1];
+            for(int col=0;col<=row;col++)
+            {
+                triangle[row][col]+=min(temp[col],temp[col+1]);
+            }
+            temp=triangle[row];
+        }
+        return triangle[0][0];
+    }
+};
