@@ -3,7 +3,14 @@ class Solution {
 public:
     int nextBeautifulNumber(int n) {
         int number = n + 1;
-        while (true) {
+        string maxnum=to_string(n);
+        int digits=maxnum.size();
+        int upperlimit=0;
+        for(int i=0;i<digits+1;i++)
+        {
+            upperlimit=upperlimit*10+(digits+1);
+        }
+        while (number<=upperlimit) {
             string freq = string(10, '0');
             int temp = number;
             while (temp > 0) {
