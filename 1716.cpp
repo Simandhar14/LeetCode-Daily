@@ -21,3 +21,21 @@ public:
         return totalMoney;
     }
 };
+
+//using sum of natural numbers formula
+class Solution {
+public:
+    int totalMoney(int n) {
+        int totalMoney=0;
+        int startDay=1;
+        while(n>0)
+        {
+            int days=min(7,n);
+            int endDay=startDay+days-1;
+            totalMoney+=((endDay-startDay+1) * (endDay+startDay))/2;
+            n-=(endDay-startDay+1);
+            startDay++;
+        }
+        return totalMoney;
+    }
+};
