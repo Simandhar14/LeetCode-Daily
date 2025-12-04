@@ -42,3 +42,45 @@ public:
         return collisions;
     }
 };
+
+//java
+
+class Solution {
+    public int countCollisions(String directions) {
+        int n = directions.length();
+        int i = 0;
+        int collisions = 0;
+        Stack<Character> st = new Stack();
+        while (i < n) {
+            if (!st.isEmpty()) {
+                if (st.peek() == 'R') {
+                    if (directions.charAt(i) == 'L')
+                        collisions += 2;
+                    else if (directions.charAt(i) == 'S')
+                        collisions += 1;
+                    else {
+                        st.push(directions.charAt(i));
+                        i++;
+                        continue;
+                    }
+                    st.pop();
+                    while (!st.isEmpty() && st.peek() == 'R') {
+                        collisions++;
+                        st.pop();
+                    }
+                      st.push('S');
+                } else if (st.peek() == 'S') {
+                    if (directions.charAt(i) == 'L') {
+                        while (i<n && directions.charAt(i) == 'L') {
+                            collisions++;
+                            i++;
+                        }
+                        i--;
+                    }else st.push(directions.charAt(i));
+                }else st.push(directions.charAt(i));
+            }else st.push(directions.charAt(i));
+            i++;
+        }
+        return collisions;
+    }
+}
