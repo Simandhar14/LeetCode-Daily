@@ -16,23 +16,19 @@ public:
     }
 };
 
-//using extra space but better time complexity
+//optimal approach
 
 class Solution {
 public:
     int countTriples(int n) {
         int count=0;
-        unordered_set<int>a2;
         for(int a=1;a<=n;a++)
         {
-            a2.insert(a*a);
-        }
-        for(int b=1;b<=n;b++)
-        {
-            for(int c=b;c<=n;c++)
+            for(int b=a+1;b<=n;b++)
             {
-                int multiply=(c+b) * (c-b);
-                if(a2.find(multiply)!=a2.end()) count+=1;
+               int sum=a*a + b*b;
+               int sqrtval=sqrt(sum);
+               if((sqrtval*sqrtval)==sum && sqrtval<=n) count+=2;
             }
         }
         return count;
