@@ -52,3 +52,41 @@ public:
         return result;
     }
 };
+
+//dp + binary search
+
+class Solution {
+public:
+    int dp[100001][3];
+    int binarySearch(vector<vector<int>>& events, int i) {
+        int left = i + 1;
+        int right = events.size() - 1;
+        int index = events.size();
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (events[mid][0] > events[i][1]) {
+                index = mid;
+                right = mid - 1;
+            } else
+                left = mid + 1;
+        }
+        return index;
+    }
+    int solve(vector<vector<int>>& events, int i, int k) {
+        if (i >= events.size() || k == 0)
+            return 0;
+        if (dp[i][k] != -1)
+            return dp[i][k];
+        int take = 0, skip = 0;
+        int validIdx = binarySearch(events, i);
+        take = events[i][2] + solve(events, validIdx, k - 1);
+        skip = solve(events, i + 1, k);
+        return dp[i][k] = max(take, skip);
+    }
+    int maxTwoEvents(vector<vector<int>>& events) {
+        int n = events.size();
+        memset(dp, -1, sizeof(dp));
+        sort(begin(events), end(events));
+        return solve(events, 0, 2);
+    }
+};
