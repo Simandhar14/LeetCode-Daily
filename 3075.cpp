@@ -9,7 +9,7 @@ public:
         while(!pq.empty() && k--)
         {
             int val=pq.top()-decrement;
-            if(val<0) break;
+            if(val<=0) break;
             result+=val;
             pq.pop();
             decrement++;
