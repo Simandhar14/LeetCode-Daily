@@ -1,47 +1,42 @@
 class Solution {
 public:
+    typedef pair<long long, long long> p;
     int mostBooked(int n, vector<vector<int>>& meetings) {
-        sort(begin(meetings), end(meetings));
-        vector<long long> rooms(n, 0);
-        
-        priority_queue<vector<long long>, vector<vector<long long>>, greater<vector<long long>>> pq;
-        
-        priority_queue<long long, vector<long long>, greater<long long>> freeroom;
-        for (int i = 0; i < n; i++) freeroom.push(i);
-
-        int index = 0;
-        while (index < meetings.size()) {
-            long long currentStart = meetings[index][0];
-            long long currentEnd = meetings[index][1];
-            long long duration = currentEnd - currentStart;
-
-            while (!pq.empty() && pq.top()[0] <= currentStart) {
-                freeroom.push(pq.top()[1]);
-                pq.pop();
+        sort(meetings.begin(), meetings.end()); //sort meetings acc to start time
+        vector<int> booked(n, 0);
+        priority_queue<int, vector<int>, greater<int>> free; //keep track of free rooms
+        priority_queue<p, vector<p>, greater<p>> busy; //keep track of busy rooms
+        for (int i = 0; i < n; i++)
+            free.push(i);
+        for (int i = 0; i < meetings.size(); i++) {
+            long long start = meetings[i][0];
+            long long end = meetings[i][1];
+            while (!busy.empty() && busy.top().first <= start) { //empty the busy rooms 
+                free.push(busy.top().second);
+                busy.pop();
             }
-
-            if (!freeroom.empty()) {
-                int room = freeroom.top();
-                freeroom.pop();
-                pq.push({currentEnd, room});
-                rooms[room]++;
-            } else {
-                auto temp = pq.top(); pq.pop();
-                long long newStart = temp[0];
-                int room = temp[1];
-                pq.push({newStart + duration, room});
-                rooms[room]++;
+            if (!free.empty()) { //occupy the free room if found
+                int room = free.top();
+                free.pop();
+                busy.push({end, room});
+                booked[room]++;
+            } else { // then take the first room which will be free
+                int room = busy.top().second;
+                long long time = busy.top().first;
+                long long delayed = time - start;
+                busy.pop();
+                busy.push({delayed + end, room});
+                booked[room]++;
             }
-            index++;
         }
-
-        int maxMeetings = -1, ans = -1;
+        int maxbooked = 0;
+        int maxroom = 0;
         for (int i = 0; i < n; i++) {
-            if (rooms[i] > maxMeetings) {
-                maxMeetings = rooms[i];
-                ans = i;
+            if (booked[i] > maxbooked) {
+                maxbooked = booked[i];
+                maxroom = i;
             }
         }
-        return ans;
+        return maxroom;
     }
 };
