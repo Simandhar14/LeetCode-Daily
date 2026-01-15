@@ -1,3 +1,4 @@
+//cpp
 class Solution {
 public:
     int maximizeSquareHoleArea(int n, int m, vector<int>& hBars,
@@ -24,3 +25,32 @@ public:
         return maxSide*maxSide;
     }
 };
+
+//java
+class Solution {
+    public int maximizeSquareHoleArea(int n, int m, int[] hBars, int[] vBars) {
+        Arrays.sort(hBars);
+        Arrays.sort(vBars);
+
+        int maxhStreak = 1, maxvStreak = 1;
+        int streak = 1;
+
+        for (int i = 1; i < hBars.length; i++) {
+            if (hBars[i] == hBars[i - 1] + 1)
+                streak++;
+            else
+                streak = 1;
+            maxhStreak = Math.max(maxhStreak, streak);
+        }
+        streak = 1;
+        for (int i = 1; i < vBars.length; i++) {
+            if (vBars[i] == vBars[i - 1] + 1)
+                streak++;
+            else
+                streak = 1;
+            maxvStreak = Math.max(maxvStreak, streak);
+        }
+        int side = Math.min(maxhStreak, maxvStreak) + 1;
+        return side * side;
+    }
+}
