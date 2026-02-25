@@ -16,3 +16,17 @@ public:
         return result;
     }
 };
+
+//without space
+class Solution {
+public:
+    vector<int> sortByBits(vector<int>& arr) {
+        sort(begin(arr),end(arr),[&](int &a,int &b){
+             int setBits1=__builtin_popcount(a);
+             int setBits2=__builtin_popcount(b);
+             if(setBits1==setBits2) return a<b;
+             return setBits1<setBits2;
+        });
+        return arr;
+    }
+};
