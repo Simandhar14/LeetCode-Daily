@@ -12,3 +12,14 @@ public:
         return false;
     }
 };
+
+//better approach
+class Solution {
+public:
+    bool rotateString(string s, string goal) {
+        if(s.length()!=goal.length()) return false;
+        s += s;
+        int idx = s.find(goal);
+        return idx != -1;
+    }
+};
