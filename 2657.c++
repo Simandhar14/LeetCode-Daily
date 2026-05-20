@@ -1,30 +1,25 @@
 class Solution {
 public:
     vector<int> findThePrefixCommonArray(vector<int>& A, vector<int>& B) {
+
         int n = A.size();
-        vector<int> maxindex(n, 0);
-        for (int i = 1; i < n+1; i++) {
-            int idxa = 0;
-            for (int j = 0; j < n; j++) {
-                if (A[j] == i) {
-                    idxa = j;
-                    break;
-                }
-            }
-            int idxb=0;
-            for (int j = 0; j < n; j++) {
-                if (B[j] == i) {
-                    idxb = j;
-                    break;
-                }
-            }
-            int maxi=max(idxa,idxb);
-            maxindex[maxi]++;
+
+        vector<int> ans(n);
+        vector<int> freq(n + 1, 0);
+
+        int common = 0;
+
+        for (int i = 0; i < n; i++) {
+
+            if (++freq[A[i]] == 2)
+                common++;
+
+            if (++freq[B[i]] == 2)
+                common++;
+
+            ans[i] = common;
         }
-        for(int i=1;i<n;i++)
-        {
-            maxindex[i]+=maxindex[i-1];
-        }
-        return maxindex;
+
+        return ans;
     }
 };
