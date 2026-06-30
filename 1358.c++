@@ -1,31 +1,33 @@
+//sliding window
 class Solution {
 public:
     int numberOfSubstrings(string s) {
-        int count=0;
-        int n=s.length();
-        int j=0;
-        unordered_map<char,int>mp;
-        for(int i=0;i<n;i++)
-        {
-            char ch=s[i];
-            mp[ch]++;
-            if(mp.size()==3)
-            {
-                count+=n-i;
-                while(j<i)
-                {
-                    char ch=s[j];
-                    mp[ch]--;
+        int n = s.size();
+        int result = 0;
+        int countA = 0, countB = 0, countC = 0;
+        int j = 0;
+        for (int i = 0; i < n; i++) {
+            if (s[i] == 'a')
+                countA++;
+            if (s[i] == 'b')
+                countB++;
+            if (s[i] == 'c')
+                countC++;
+            if (countA && countB && countC) {
+                while (j < i && countA && countB && countC) {
+                    result += n - i;
+                    if (s[j] == 'a')
+                        countA--;
+                    if (s[j] == 'b')
+                        countB--;
+                    if (s[j] == 'c')
+                        countC--;
                     j++;
-                    if(mp[ch]==0) mp.erase(ch);
-                    if(mp.size()==3) count+=n-i;
-                    else break;
                 }
             }
         }
-        return count;
+        return result;
     }
-
 };
 
 //brute force
@@ -52,3 +54,4 @@ public:
         return result;
     }
 };
+
