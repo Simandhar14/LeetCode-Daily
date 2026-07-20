@@ -43,3 +43,29 @@ public:
         return result;
     }
 };
+
+//better approach
+class Solution {
+public:
+    vector<vector<int>> shiftGrid(vector<vector<int>>& grid, int k) {
+        int m = grid.size();
+        int n = grid[0].size();
+        k = k % (m * n);
+        while (k--) {
+            int prev = INT_MIN;
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (prev == INT_MIN) {
+                        prev = grid[i][j];
+                        continue;
+                    }
+                    int temp = grid[i][j];
+                    grid[i][j] = prev;
+                    prev = temp;
+                }
+            }
+            grid[0][0] = prev;
+        }
+        return grid;
+    }
+};
