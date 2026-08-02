@@ -5,23 +5,22 @@ public:
         int total = accumulate(piles.begin(), piles.end(), 0);
         int n = piles.size();
         int dp[n][n];
-        for (int start = (n / 2) - 1; start < n; start++) {
-            for (int end = (n / 2) - 1; end >= 0; end--) {
-                if (start == end)
-                    dp[start][end] = piles[start];
-                else
-                    dp[start][end] = 0;
+        for (int start = 0; start < n; start++) {
+            for (int end = 0; end < n; end++) {
+                dp[start][end] = 0;
             }
         }
-        for (int start = 0; start < n; start++) {
-            for (int end = n - 1; end >= 0; end--) {
+        for (int start = 0; start < n; start++)
+            dp[start][start] = piles[start];
+        for (int start = 0; start < n - 2; start++) {
+            for (int end = n - 1; end >= 2; end--) {
                 int take1 = piles[start] + dp[start + 1][end - 1];
                 int take3 = piles[start] + dp[start + 2][end];
                 int leftChoice = min(take1, take3);
                 int take2 = piles[end] + dp[start + 1][end - 1];
-                int take4 = piles[end] + dp[ start][end - 2];
+                int take4 = piles[end] + dp[start][end - 2];
                 int rightChoice = min(take2, take4);
-                return dp[start][end] = max(leftChoice, rightChoice);
+                dp[start][end] = max(leftChoice, rightChoice);
             }
         }
         return dp[0][n - 1];
